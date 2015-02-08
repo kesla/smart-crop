@@ -1,0 +1,25 @@
+{
+  "name": "smart-crop",
+  "version": "0.0.0",
+  "description": "crop images in a smart way",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kesla/smart-crop"
+  },
+  "author": "David Björklund <david.bjorklund@gmail.com> (http://davidbjorklund.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kesla/smart-crop/issues"
+  },
+  "homepage": "https://github.com/kesla/smart-crop",
+  "dependencies": {
+    "opencv": "git://github.com/peterbraden/node-opencv"
+  },
+  "devDependencies": {
+    "tape": "^3.5.0"
+  }
+}
