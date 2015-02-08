@@ -39,20 +39,23 @@ function toResult(matrix, center, width, height, method) {
 }
 
 function centerFromFaces(matrix, callback) {
-  centerFromFacesQueue.add({ matrix: matrix, callback: callback });
+  centerFromFacesQueue.add({
+    matrix: matrix,
+    callback: callback
+  });
 }
 
 function _centerFromFaces(options, done) {
-  function callback (err, faces) {
+  function callback(err, faces) {
     options.callback(err, faces);
     done(err);
   }
-  
+
   options.matrix.detectObject(opencv.FACE_CASCADE, {}, function(err, faces) {
     if (err) return callback(err);
 
     if (faces.length === 0) return callback();
-    
+
     var weight = 0;
     var x = 0;
     var y = 0;
