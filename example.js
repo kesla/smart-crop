@@ -1,7 +1,6 @@
 
 var smartCrop = require('./');
 
-var foo = [];
 var opencv = require('opencv');
 var readFileSync = require('fs').readFileSync;
 
