@@ -8,9 +8,17 @@ module.exports = function smartCrop(options, callback) {
     centerFromFaces(matrix, function(err, center) {
       if (err) return callback(err);
 
+      var method;
+      if (center) {
+        method = 'faces';
+      } else {
+        method = 'good-features';
+        center = centerFromGoodFeatures(matrix);
+      }
+
       callback(
         null,
-        toResult(matrix, center, options.width, options.height, 'faces')
+        toResult(matrix, center, options.width, options.height, method)
       );
     });
   });
@@ -32,6 +40,8 @@ function centerFromFaces(matrix, callback) {
   matrix.detectObject(opencv.FACE_CASCADE, {}, function(err, faces) {
     if (err) return callback(err);
 
+    if (faces.length === 0) return callback();
+    
     var weight = 0;
     var x = 0;
     var y = 0;
@@ -46,4 +56,19 @@ function centerFromFaces(matrix, callback) {
       y: y / weight
     });
   });
+}
+
+function centerFromGoodFeatures(matrix) {
+  var x = 0;
+  var y = 0;
+  var weight = 0;
+  matrix.goodFeaturesToTrack().forEach(function(point) {
+    weight = weight + 1;
+    x = x + point[0];
+    y = y + point[1];
+  });
+  return {
+    x: x / weight,
+    y: y / weight
+  };
 }
