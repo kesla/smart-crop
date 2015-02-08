@@ -1,5 +1,7 @@
 'use strict';
 var opencv = require('opencv');
+var Queue = require('basic-queue');
+var centerFromFacesQueue = new Queue(_centerFromFaces, 1);
 
 module.exports = function smartCrop(options, callback) {
   opencv.readImage(options.image, function(err, matrix) {
@@ -37,7 +39,16 @@ function toResult(matrix, center, width, height, method) {
 }
 
 function centerFromFaces(matrix, callback) {
-  matrix.detectObject(opencv.FACE_CASCADE, {}, function(err, faces) {
+  centerFromFacesQueue.add({ matrix: matrix, callback: callback });
+}
+
+function _centerFromFaces(options, done) {
+  function callback (err, faces) {
+    options.callback(err, faces);
+    done(err);
+  }
+  
+  options.matrix.detectObject(opencv.FACE_CASCADE, {}, function(err, faces) {
     if (err) return callback(err);
 
     if (faces.length === 0) return callback();

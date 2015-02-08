@@ -1,7 +1,7 @@
 {
   "name": "smart-crop",
   "version": "0.0.0",
-  "description": "crop images in a smart way",
+  "description": "Get smart cropping coordinates to an images (based on https://github.com/thumbor/thumbor/wiki/Detection-algorithms)",
   "main": "index.js",
   "scripts": {
     "test": "tape test/test.js"
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/kesla/smart-crop",
   "dependencies": {
+    "basic-queue": "^1.0.1",
     "opencv": "git://github.com/peterbraden/node-opencv"
   },
   "devDependencies": {
