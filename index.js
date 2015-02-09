@@ -20,22 +20,40 @@ module.exports = function smartCrop(options, callback) {
 
       callback(
         null,
-        toResult(matrix, center, options.width, options.height, method)
+        matrix.width() / matrix.height() < options.width / options.height ?
+          cropVertical(matrix, center, options.width, options.height, method) :
+          cropHorizontal(matrix, center, options.width, options.height, method)
       );
     });
   });
 };
 
-function toResult(matrix, center, width, height, method) {
-  var left = Math.round(center.x / matrix.width() * (matrix.width() - width));
-  var top = Math.round(center.y / matrix.height() * (matrix.height() - height));
+function cropHorizontal(matrix, center, width, height, method) {
+  var newWidth = width / height * matrix.height();
+  var left = Math.round( center.x - newWidth / 2 );
+  var right = left + newWidth;
+  
   return {
     method: method,
     left: left,
+    right: right,
+    top: 0,
+    bottom: matrix.height()
+  }
+}
+
+function cropVertical(matrix, center, width, height, method) {
+  var newHeight = height / width * matrix.width();
+  var top = Math.round(center.y - newHeight / 2);
+  var bottom = top + newHeight;
+  
+  return {
+    method: method,
+    left: 0,
+    right: matrix.width(),
     top: top,
-    right: left + width,
-    bottom: top + height
-  };
+    bottom: bottom
+  }
 }
 
 function centerFromFaces(matrix, callback) {
