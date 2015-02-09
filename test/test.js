@@ -19,6 +19,23 @@ test('faces', function(t) {
     });
 });
 
+test('smart right is outside of image', function(t) {
+  smartCrop({
+    image: readFileSync(__dirname + '/zach.jpg'),
+    width: 10,
+    height: 10
+  }, function(err, results) {
+      if (err) return t.end(err);
+
+      t.equal(results.method, 'faces');
+      t.equal(results.left, 0);
+      t.equal(results.right, 150);
+      t.equal(results.top, 0);
+      t.equal(results.bottom, 150);
+      t.end();
+    });
+});
+
 test('good-features', function(t) {
   smartCrop({
     image: readFileSync(__dirname + '/moon.jpg'),

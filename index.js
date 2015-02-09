@@ -30,8 +30,9 @@ module.exports = function smartCrop(options, callback) {
 
 function cropHorizontal(matrix, center, width, height, method) {
   var newWidth = width / height * matrix.height();
-  var left = Math.round( center.x - newWidth / 2 );
-  var right = left + newWidth;
+  var left = Math.max(Math.round( center.x - newWidth / 2 ), 0);
+  var right = Math.min(left + newWidth, matrix.width());
+  left = right - newWidth;
   
   return {
     method: method,
@@ -44,8 +45,9 @@ function cropHorizontal(matrix, center, width, height, method) {
 
 function cropVertical(matrix, center, width, height, method) {
   var newHeight = height / width * matrix.width();
-  var top = Math.round(center.y - newHeight / 2);
-  var bottom = top + newHeight;
+  var top = Math.max(Math.round(center.y - newHeight / 2), 0);
+  var bottom = Math.min(top + newHeight, matrix.height());
+  top = top - newHeight();
   
   return {
     method: method,
