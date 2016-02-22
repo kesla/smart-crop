@@ -1,6 +1,6 @@
 {
   "name": "smart-crop",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Get smart cropping coordinates to an images (based on https://github.com/thumbor/thumbor/wiki/Detection-algorithms)",
   "main": "index.js",
   "scripts": {
