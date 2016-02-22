@@ -2,4 +2,3 @@ test
 .gitignore
 .travis.yml
 example.js
-readme.md
